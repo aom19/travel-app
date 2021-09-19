@@ -1,9 +1,9 @@
 import React from 'react'
 
-const PlaceDetails = () => {
+const PlaceDetails = ({place}) => {
     return (
         <div>
-            <h2>PlaceDetails</h2>
+            <h2>{place.name}</h2>
         </div>
     )
 }
