@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, createRef } from "react";
 import { CssBaseline, Grid } from "@material-ui/core";
 
 import "./App.css";
@@ -14,6 +14,9 @@ function App() {
   const [coordinates, setCoordinates] = useState({});
   const [bounds, setBounds] = useState(); // top and bottom coordinates
 
+  const [childClicked, setChildClicked] = useState();
+  const [isLoading, setIsLoading] = useState(false);
+
   //get user coordinates when paage load
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
@@ -25,10 +28,12 @@ function App() {
 
   //fetch places
   useEffect(() => {
+    setIsLoading(true);
     if (bounds && coordinates) {
       getPlaces(bounds).then((data) => {
-        console.log(data);
+      
         setPlaces(data);
+        setIsLoading(false);
       });
     }
   }, [coordinates, bounds]);
@@ -39,13 +44,19 @@ function App() {
       <Header />
       <Grid container spacing={3} style={{ width: "100%" }}>
         <Grid item xs={12} md={4}>
-          <List places={places} />
+          <List
+            places={places}
+            childClicked={childClicked}
+            isLoading={isLoading}
+          />
         </Grid>
         <Grid item xs={12} md={8}>
           <Map
             setCoordinates={setCoordinates}
             setBounds={setBounds}
             coordinates={coordinates}
+            places={places}
+            setChildClicked={setChildClicked}
           />
         </Grid>
       </Grid>
