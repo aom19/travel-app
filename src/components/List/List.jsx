@@ -6,10 +6,9 @@ import PlaceDetails from '../PlaceDetails/PlaceDetails'
 import useStyles from './styles'
 
 
-const List = ({places,childClicked,isLoading}) => {
+const List = ({places,childClicked,isLoading , rating, type, setType,setRating}) => {
 
-    const [type , setType] = useState('restaurants')
-    const [rating , setRating] = useState('');
+    
     const [elRefs, setElRefs]= useState([])
 
 
