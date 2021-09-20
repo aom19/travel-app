@@ -23,14 +23,14 @@ function App() {
     );
   }, []);
 
-  console.log(coordinates);
-  console.log(bounds);
   //fetch places
   useEffect(() => {
-    getPlaces(bounds).then((data) => {
-      console.log(data);
-      setPlaces(data);
-    });
+    if (bounds && coordinates) {
+      getPlaces(bounds).then((data) => {
+        console.log(data);
+        setPlaces(data);
+      });
+    }
   }, [coordinates, bounds]);
 
   return (
