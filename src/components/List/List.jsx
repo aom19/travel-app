@@ -7,19 +7,12 @@ import useStyles from './styles'
 
 
 const List = ({places,childClicked,isLoading , rating, type, setType,setRating}) => {
-
-    
     const [elRefs, setElRefs]= useState([])
-
-
+    
     const classes = useStyles();
 
-    
     useEffect(()=>{
-
-        setElRefs((refs) => Array(places.length).fill().map((_, i) => refs[i] || createRef()));
-        
-        
+        setElRefs((refs) => Array(places?.length).fill().map((_, i) => refs[i] || createRef()));
     },[places])
 
 console.log(elRefs)
