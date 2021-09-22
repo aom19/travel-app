@@ -7,10 +7,12 @@ import List from "./components/List/List";
 import Map from "./components/Map/Map";
 import PlaceDetails from "./components/PlaceDetails/PlaceDetails";
 
-import { getPlaces } from "./api/index";
+import { getPlaces, getWeatherData } from "./api/index";
 
 function App() {
   const [places, setPlaces] = useState([]);
+  const [weatherData, setWeatherData] = useState([]);
+
   const [filteredPlaces, setFilteredPlaces] = useState([]);
   const [coordinates, setCoordinates] = useState({});
   const [bounds, setBounds] = useState(); // top and bottom coordinates
@@ -31,14 +33,16 @@ function App() {
   }, []);
 
   useEffect(() => {
-    const filteredPlaces = places.filter((place) => place.rating > rating);
+    const filteredPlaces = places?.filter((place) => place.rating > rating);
     setFilteredPlaces(filteredPlaces);
   }, [rating]);
 
   //fetch places
   useEffect(() => {
-    setIsLoading(true);
     if (bounds && coordinates) {
+      setIsLoading(true);
+      getWeatherData(coordinates).then((data) => setWeatherData(data));
+
       getPlaces(type, bounds).then((data) => {
         setPlaces(data);
         setFilteredPlaces([]);
@@ -46,6 +50,9 @@ function App() {
       });
     }
   }, [bounds, type]);
+  {
+    // console.log(weatherData);
+  }
 
   return (
     <>
@@ -70,6 +77,7 @@ function App() {
             coordinates={coordinates}
             places={filteredPlaces.length ? filteredPlaces : places}
             setChildClicked={setChildClicked}
+            weatherData={weatherData}
           />
         </Grid>
       </Grid>
