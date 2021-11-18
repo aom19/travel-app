@@ -7,7 +7,7 @@ Build with `React ,Redux , Material-UI , Google-Maps-Api, Axios`
 
 
 ## Installation
-```
+```bash
 cd travel-app
 npm install 
 npm start
